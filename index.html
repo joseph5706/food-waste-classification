@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoodWise AI — Save Food. Save Money.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">✳</span><span>foodwise<span class="brand-ai">.ai</span></span></a>
+      <div class="workspace-label">YOUR KITCHEN</div>
+      <button class="nav active" data-target="overview"><span>⌂</span> Overview</button>
+      <button class="nav" data-target="pantry"><span>▦</span> My Pantry</button>
+      <button class="nav" data-target="recipes"><span>♨</span> AI Recipe Lab</button>
+      <button class="nav" data-target="impact"><span>↗</span> Your Impact</button>
+      <div class="sidebar-bottom">
+        <div class="tip-card"><div class="tip-icon">✦</div><b>Small choices. Big impact.</b><p>Use what you have before buying more.</p></div>
+        <div class="profile"><div class="avatar">J</div><div><b>My Kitchen</b><small>Waste less, live better</small></div><span class="dots">•••</span></div>
+      </div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="mobile-brand">✳ foodwise.ai</div><div class="topbar-right"><span class="live-dot"></span> Your sustainable kitchen <div class="avatar small">J</div></div></header>
+      <section class="page active-page" id="overview">
+        <div class="welcome-row"><div><div class="eyebrow">THURSDAY, YOUR KITCHEN DASHBOARD</div><h1>Good food deserves<br><span class="green-text">a second chance.</span></h1><p class="subhead">A little planning goes a long way. Let's make every ingredient count.</p></div><div class="hero-art"><div class="sun"></div><div class="leaf leaf1">✦</div><div class="leaf leaf2">✿</div><div class="hero-emoji">🥬</div><div class="art-label">FRESH THINKING<br><b>LESS WASTE</b></div></div></div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-top"><span>In your pantry</span><span class="stat-icon">▦</span></div><div class="stat-number" id="pantryCount">—</div><div class="stat-foot">ingredients tracked</div></div>
+          <div class="stat-card highlight"><div class="stat-top"><span>Needs attention</span><span class="stat-icon">◷</span></div><div class="stat-number" id="urgentCount">—</div><div class="stat-foot">use today or tomorrow</div></div>
+          <div class="stat-card"><div class="stat-top"><span>Food rescued</span><span class="stat-icon">♡</span></div><div class="stat-number" id="savedCount">0</div><div class="stat-foot">items marked as saved</div></div>
+          <div class="stat-card"><div class="stat-top"><span>Money saved</span><span class="stat-icon">₹</span></div><div class="stat-number" id="savedValue">₹0</div><div class="stat-foot">your estimated savings</div></div>
+        </div>
+        <div class="section-heading"><div><div class="eyebrow">YOUR NEXT BEST MOVE</div><h2>Save-it-first list</h2></div><button class="text-button" data-goto="pantry">View pantry <span>↗</span></button></div>
+        <div class="content-grid"><div class="panel priority-panel"><div class="panel-head"><div><h3>Use these first</h3><p>Ingredients approaching their expiry date</p></div><span class="pill orange">Priority</span></div><div id="priorityList" class="food-list"></div></div>
+        <div class="panel recipe-cta"><div class="recipe-spark">✳</div><div class="eyebrow">MEET YOUR LEFTOVER CHEF</div><h2>What's in your<br>fridge today?</h2><p>Turn what you already have into something delicious.</p><button class="primary-button" data-goto="recipes">Create my recipes <span>→</span></button><div class="recipe-illustration">🥕　🍅　🥬</div></div></div>
+        <div class="bottom-note"><span>✦</span><div><b>FoodWise principle</b><p>Best before doesn't always mean unsafe after, and expiry rules differ by food. When in doubt, follow local food-safety guidance—never taste food to test whether it's safe.</p></div></div>
+      </section>
+      <section class="page" id="pantry">
+        <div class="page-title-row"><div><div class="eyebrow">KNOW WHAT YOU HAVE</div><h1>My pantry<span class="green-text">.</span></h1><p class="subhead">Keep track of your food and give every ingredient a plan.</p></div><button class="primary-button" id="showAdd">＋ Add food</button></div>
+        <div class="panel add-panel hidden" id="addPanel"><h3>Add an ingredient</h3><form id="addForm" class="add-form"><label>Food name<input name="name" required placeholder="e.g. Carrots"></label><label>Quantity<input name="quantity" placeholder="e.g. 3 pieces"></label><label>Expiry date<input name="expiry" type="date" required></label><label>Category<select name="category"><option>Vegetables</option><option>Fruit</option><option>Dairy</option><option>Cooked food</option><option>Grains</option><option>Other</option></select></label><button class="primary-button" type="submit">Add to pantry</button></form><p class="form-message" id="formMessage"></p></div>
+        <div class="filter-row"><div class="search-box">⌕ <input id="pantrySearch" placeholder="Search your ingredients..."></div><span id="pantryTotal" class="muted"></span></div>
+        <div id="pantryGrid" class="pantry-grid"></div>
+      </section>
+      <section class="page" id="recipes">
+        <div class="eyebrow">CREATIVE COOKING, LESS WASTE</div><h1>AI Recipe Lab<span class="green-text">.</span></h1><p class="subhead">Recipes start with what you already own—not another shopping trip.</p>
+        <div class="recipe-lab-layout"><div class="panel recipe-input-panel"><div class="large-icon">♨</div><h2>Let's make something good.</h2><p>We'll look at your pantry and prioritize ingredients that need to be used soon.</p><label class="field-label">Dietary preferences (optional)<textarea id="preferences" placeholder="e.g. vegetarian, no peanuts, quick meals..."></textarea></label><button class="primary-button full" id="generateRecipes">✦ Generate recipes <span>→</span></button><p class="tiny-note">AI suggestions are ideas, not food-safety guarantees.</p></div><div class="panel recipe-results"><div class="panel-head"><div><div class="eyebrow">MADE FOR YOUR PANTRY</div><h2>Your recipe ideas</h2></div><span class="pill green" id="recipeMode">Ready when you are</span></div><div id="recipeOutput" class="recipe-output empty-state"><div class="empty-emoji">🍲</div><b>Your next meal is waiting.</b><p>Generate recipes to see ideas based on your current ingredients.</p></div></div></div>
+        <div class="safety-banner">⚠ <span><b>Safety first:</b> Do not use food that may be spoiled. Follow storage guidance, and discard food when safety is uncertain. Reheating does not make all improperly stored food safe.</span></div>
+      </section>
+      <section class="page" id="impact">
+        <div class="eyebrow">EVERY INGREDIENT COUNTS</div><h1>Your impact<span class="green-text">.</span></h1><p class="subhead">Celebrate food you intentionally use instead of throwing away.</p>
+        <div class="impact-hero"><div><div class="eyebrow">YOUR FOODWISE JOURNEY</div><h2>Progress starts<br>with one ingredient.</h2><p>Mark food as rescued when you use it instead of discarding it.</p></div><div class="impact-graphic">🌍</div></div>
+        <div class="stats-grid impact-stats"><div class="stat-card"><div class="stat-top">Food items rescued</div><div class="stat-number" id="impactCount">0</div><div class="stat-foot">logged by you</div></div><div class="stat-card"><div class="stat-top">Estimated money saved</div><div class="stat-number" id="impactValue">₹0</div><div class="stat-foot">based on your entries</div></div></div>
+        <div class="panel"><h3>How we measure impact</h3><p class="subhead small-sub">Food rescued is self-reported. Savings are based on the values you enter. We do not claim a precise carbon reduction without reliable ingredient-specific data.</p><div id="impactLog" class="impact-log"></div></div>
+      </section>
+      <footer>Made with care for people and the planet <span>✳ FOODWISE AI · HACKATHON PROTOTYPE</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
